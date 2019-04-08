@@ -43,3 +43,11 @@ far_to_kel <- function(temp) {
   kelvin <- ((temp - 32) * (5/9)) + 273.15
   return(kelvin) 
 }
+
+
+far_to_cel_2 <- function(temp){
+  stopifnot(is.numeric(temp))
+  kel <- far_to_kel(temp)
+  cel <- kel_to_cel(kel)
+  return(cel)
+} 
