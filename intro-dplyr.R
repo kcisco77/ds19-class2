@@ -40,3 +40,49 @@ africa <- gapminder %>%
   filter(continent == "Africa") %>%
   select(country,population = pop, lifeExp)
 table(africa$country)
+
+# select year, population, country, for Europe
+europe <- gapminder %>%
+  filter(continet == "Europe") %>%
+  select(year,population = pop, country)
+europe_table <- table(europe$country)
+View(europe_table)
+
+# working with group_by() & summarize ()
+str(gapminder %>% group_by(continent))
+
+# summarize mean gdp per continent
+gdp_continent <- gapminder %>%
+  group_by(continent) %>%
+  summarize(mean_gdp = mean(gdpPercap))
+
+# Mean pop for all continents
+pop_continent <- gapminder %>%
+  group_by(continent) %>%
+  summarize (mean_pop = mean(pop))
+View(pop_continent)
+
+# count () and n()
+gapminder %>%
+  filter (year == 2002) %>%
+  count(continent, sort= TRUE)
+
+gapminder %>%
+  group_by(continent) %>%
+  summarize (se = sd(lifeExp/sqrt(n())))
+
+# mutate () is my friend
+xy <- data.frame(x = rnorm(100),
+                 y = rnorm(100))
+head(xy)
+xyz <- xy %>%
+  mutate(z = x*y)
+head(xyz)
+
+
+# add a column that give full gdp per continent
+gdp_per_cont <- gapminder %>%
+  mutate(gdp_country= gdpPercap*pop) %>%
+  group_by(continent) %>%
+  summarize(gdp.continent = sum(gdp_country))
+View(gdp_per_cont)
